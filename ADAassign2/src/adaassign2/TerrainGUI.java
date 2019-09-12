@@ -5,29 +5,27 @@
  */
 package adaassign2;
 
-/**
- *
- * @author will2
- */
-import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
+import java.sql.Statement;
 
-public class ADAassign2 {
+/**
+ *
+ * @author will2
+ */
+public class TerrainGUI {
+    private String password = "fpn871";
+    private String userName = "student";
     private static final String DRIVER="com.mysql.cj.jdbc.Driver";
     private static final String DB_URL="jdbc:mysql://raptor2:3306/terrains";
-
-    public static void main(String[] args) {
-        // obtain user name and password from keyboard
-        Scanner keyboardScanner = new Scanner(System.in);
-        System.out.print("Please enter user name:");
-        String userName = keyboardScanner.nextLine();
-        System.out.print("Please enter password:");
-        String password = keyboardScanner.nextLine();
+    
+    public TerrainGUI(){
         
+    }
+    
+    public static void Query() {
         try
         {  
            Class.forName(DRIVER); // load the database driver for MySQL
@@ -52,7 +50,10 @@ public class ADAassign2 {
         catch (ClassNotFoundException e)
         {  System.out.println("ClassNotFoundException:" + e);
         }
-
     }
     
+    public static void main(String[] args) {
+        Query();
+
+    }
 }
