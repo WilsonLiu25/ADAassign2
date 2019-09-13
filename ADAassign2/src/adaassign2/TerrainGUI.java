@@ -28,16 +28,19 @@ public class TerrainGUI {
     
     
     public TerrainGUI() {
+        OptionPane(); //user picks the Terrain
+        System.out.println("The User picked: " + userTerrain);
+        
         Database db = new Database();
-        db.determineTableSize("tinyB");
+        db.determineTableSize(userTerrain);
         this.rows = db.rows;
         this.columns = db.columns;
-
-        OptionPane();
+        
+        System.out.println(rows);
+        
         Frame();
         MainPanel();
         
-        System.out.println("The User picked: " + userTerrain);
         
         frame.setVisible(true);
         
