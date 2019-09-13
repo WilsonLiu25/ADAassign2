@@ -43,6 +43,7 @@ public class ADAassign2 {
               System.out.println(rs.getString(1));
            }
            System.out.println("Closing connection to raptor2");
+           
            stmt.close();
            con.close();
         }
