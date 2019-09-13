@@ -18,8 +18,8 @@ import java.util.logging.Logger;
  * @author will2
  */
 public class Database {
-    private int rows;
-    private int columns;
+    public int rows;
+    public int columns;
     private static final String DRIVER="com.mysql.cj.jdbc.Driver";
     private static final String DB_URL="jdbc:mysql://raptor2:3306/terrains";
     private String userName = "student";
