@@ -23,23 +23,26 @@ public class TerrainGUI {
     private JPanel mainPanel = new JPanel(new BorderLayout());
     public int rows;
     public int columns;
-    private JOptionPane chooseTerrianOption = new JOptionPane();
+    //private JOptionPane chooseTerrianOption = new JOptionPane();
     public String userTerrain = "";
-    
+    private DrawTerrain drawTerrainPanel = new DrawTerrain();
     
     public TerrainGUI() {
-        OptionPane(); //user picks the Terrain
+        ChooseTerrainOption(); //user picks the Terrain
         System.out.println("The User picked: " + userTerrain);
         
         Database db = new Database();
-        db.determineTableSize(userTerrain);
+        db.determineTableSize(userTerrain); //returns us the rows and columns of the selected Terrain
         this.rows = db.rows;
         this.columns = db.columns;
         
-        System.out.println(rows);
+        System.out.println("That table has: " + rows + " and " + columns + " columns");
         
         Frame();
-        MainPanel();
+        //MainPanel();
+        
+        
+        
         
         
         frame.setVisible(true);
@@ -50,12 +53,14 @@ public class TerrainGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1600, 1100);
         
-
+        frame.add(drawTerrainPanel);
     }
     
     public void MainPanel(){
         
         mainPanel.setLayout(new GridLayout(rows, columns));
+        
+        
         
 //        JButton p1 = new JButton();
 //        p1.setBackground(Color.red);
@@ -77,7 +82,7 @@ public class TerrainGUI {
         frame.add(mainPanel);
     }
     
-    public void OptionPane(){
+    public void ChooseTerrainOption(){
         Object[] options = {"Illustrated", "Large", "Medium", "Small", "TinyA", "TinyB"};
         
         int n = JOptionPane.showOptionDialog(frame,
@@ -115,8 +120,6 @@ public class TerrainGUI {
         }
         
     }
-    
-    
     
     public static void main(String[] args) {
         TerrainGUI application = new TerrainGUI();
