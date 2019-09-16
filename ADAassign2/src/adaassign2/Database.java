@@ -24,7 +24,7 @@ public class Database {
     private static final String DB_URL="jdbc:mysql://raptor2:3306/terrains";
     private String userName = "student";
     private String password = "fpn871";
-    private String[][] difficulty;
+    public String[][] difficulty;
             
     public void determineTableSize(String tableSelection){
         if (tableSelection.equals("illustrated")) {
