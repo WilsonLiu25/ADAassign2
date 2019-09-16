@@ -57,14 +57,14 @@ public class Database {
         determineTableSize(tableSelection);
         
         try {
+            //Connecting
             Class.forName(DRIVER);
-            System.out.println("test trying to open connection");
+            //System.out.println("Trying to open connection");
             Connection connection = DriverManager.getConnection(DB_URL, userName, password);
             Statement statement = connection.createStatement();
-            System.out.println("Executing SQL statement");
+            //System.out.println("Executing SQL statement");
             String command = "SELECT * FROM " + tableSelection;
             ResultSet rs = statement.executeQuery(command);
-            System.out.println("this works until here");
             
             difficulty = new String[rows][columns];
             int rowCount = 0, colCount = 0;
@@ -78,7 +78,7 @@ public class Database {
                     colCount++;
                 }
             }
-            System.out.println("Finished looping. CLosing connection to raptor2");
+            //System.out.println("Finished looping. CLosing connection to raptor2");
                 
         }catch (SQLException e) {
             System.out.println("SQL Exception:" + e);
@@ -88,6 +88,7 @@ public class Database {
         
     }
     
+    //testing
     public static void main(String[] args) {
         Database db = new Database();
         db.setDifficulty("tinyB");
