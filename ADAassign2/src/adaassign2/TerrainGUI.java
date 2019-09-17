@@ -42,6 +42,7 @@ public class TerrainGUI {
     private DefaultListModel<String> pathTraveled = new DefaultListModel<>();
     private JList pathList;
     private VehicleManual vehicleManual = new VehicleManual(this);
+    private VehicleAutomatic vehicleAutomatic;
     private int difficultyTotal = 0;
     
     public TerrainGUI() {
@@ -112,20 +113,15 @@ public class TerrainGUI {
         
         if (n == 0 ) {
             userTerrain = "illustrated";
-        }
-        else if (n == 1) {
+        }else if (n == 1) {
             userTerrain = "large";
-        }
-        else if (n == 2) {
+        }else if (n == 2) {
             userTerrain = "medium";
-        }
-        else if (n == 3) {
+        }else if (n == 3) {
             userTerrain = "small";
-        }
-        else if (n == 4) {
+        }else if (n == 4) {
             userTerrain = "tinyA";
-        }
-        else if (n == 5) {
+        }else if (n == 5) {
             userTerrain = "tinyB";
         }
         
@@ -227,6 +223,8 @@ public class TerrainGUI {
             controlPanel.add(new JLabel("VehicleBot Path History"));
             controlPanel.add(scroll);
             frame.add(controlPanel, BorderLayout.EAST);
+            
+            vehicleAutomatic = new VehicleAutomatic(this);
             
         }
     }
