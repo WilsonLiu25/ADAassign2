@@ -41,6 +41,8 @@ public class TerrainGUI {
     private JButton moveForward;
     private DefaultListModel<String> pathTraveled = new DefaultListModel<>();
     private JList pathList;
+    private VehicleManual vehicleManual = new VehicleManual(this);
+    private int difficultyTotal = 0;
     
     public TerrainGUI() {
         ChooseTerrainOption(); //user picks the Terrain
@@ -66,7 +68,7 @@ public class TerrainGUI {
     
     public void Frame(){
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1400, 900);
+        frame.setSize(1400, 1000);
         frame.setLayout(new BorderLayout());
         
         //frame.add(drawTerrainPanel);
@@ -150,50 +152,59 @@ public class TerrainGUI {
     }   
     
     public void ChooseStartingPoint() {
-        Integer[] columnsArray = new Integer[columns];
-        for (int i = 0; i < columns; i++) {
-            columnsArray[i] = i;
-        }
-        
-        int n = (int)JOptionPane.showInputDialog(
-            frame,
-            "Please select a starting column:",
-            "Starting Column Select",
-            JOptionPane.QUESTION_MESSAGE,
-            null,
-            columnsArray,
-            columnsArray[0]
-        );
-        
-        for (int i = 0; i < columns; i++) {
-            if (i == n) {
-                pathTraveled.addElement(
-                    "[" +
-                    "0" +
-                    ", " +
-                    n +
-                    "]"
-                );
+        if (mode.equals("Manual")) {
+            Integer[] columnsArray = new Integer[columns];
+            for (int i = 0; i < columns; i++) {
+                columnsArray[i] = i;
             }
+
+            int n = (int)JOptionPane.showInputDialog(
+                frame,
+                "Please select your starting column:",
+                "Starting Column Select",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                columnsArray,
+                columnsArray[0]
+            );
+
+            for (int i = 0; i < columns; i++) {
+                if (i == n) {
+                    pathTraveled.addElement(
+                        "You have started at " +
+                        "(" +
+                        "0" +
+                        ", " +
+                        n +
+                        ")"
+                    );
+                }
+            }
+
+            vehicleManual.setColCount(n);
         }
     }
     
     public void ControlPanel(){
         if (mode.equals("Manual")) {
-            //controlPanel.setLayout(new BorderLayout());
             controlPanel.setBackground(Color.decode("#CD853F"));
             controlPanel.setPreferredSize(new Dimension(200, controlPanel.getPreferredSize().height));
 
             moveLeft = new JButton("Move Left");
+            moveLeft.addActionListener(new ButtonListener());
 
             moveRight = new JButton("Move Right");
+            moveRight.addActionListener(new ButtonListener());
 
             moveForward = new JButton("Move Forward");
+            moveForward.addActionListener(new ButtonListener());
             
-            //pathTraveled = new DefaultListModel<>();
             pathList = new JList(pathTraveled);
+            DefaultListCellRenderer renderer =  (DefaultListCellRenderer)pathList.getCellRenderer();  
+            renderer.setHorizontalAlignment(JLabel.CENTER);  
+            
             JScrollPane scroll = new JScrollPane(pathList);
-            scroll.setPreferredSize(new Dimension(175, 750));
+            scroll.setPreferredSize(new Dimension(185, 750));
             
             controlPanel.add(new JLabel("Manual Movement Buttons"));
             controlPanel.add(moveForward);
@@ -204,24 +215,53 @@ public class TerrainGUI {
             frame.add(controlPanel, BorderLayout.EAST);
             
         } else if (mode.equals("Automated")) {
+            controlPanel.setBackground(Color.decode("#CD853F"));
+            controlPanel.setPreferredSize(new Dimension(200, controlPanel.getPreferredSize().height));
+            
+            pathList = new JList(pathTraveled);
+            DefaultListCellRenderer renderer =  (DefaultListCellRenderer)pathList.getCellRenderer();  
+            renderer.setHorizontalAlignment(JLabel.CENTER);  
+            
+            JScrollPane scroll = new JScrollPane(pathList);
+            scroll.setPreferredSize(new Dimension(185, 900));
+            
+            controlPanel.add(new JLabel("VehicleBot Path History"));
+            controlPanel.add(scroll);
+            frame.add(controlPanel, BorderLayout.EAST);
             
         }
-        
     }
     
-    class ButtonListeners implements ActionListener {
+    class ButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == leftButton) {
-                vehicle.left();
-            } else if (e.getSource() == forwardButton) {
-                vehicle.forwards();
-            } else if (e.getSource() == rightButton) {
-                vehicle.right();
+            if (e.getSource() == moveLeft) {
+                //pathTraveled.addElement("You moved left");
+                vehicleManual.left();
+            } else if (e.getSource() == moveForward) {
+                //pathTraveled.addElement("You moved forward");
+                vehicleManual.forwards();
+            } else if (e.getSource() == moveRight) {
+                //pathTraveled.addElement("You moved right");
+                vehicleManual.right();
             }
         }
     }
-            
+    
+    public void updateVehiclePosition(int updateRow, int updateCol) {
+        difficultyTotal = difficultyTotal + Integer.parseInt(difficulty[updateRow][updateCol]);
+        
+        pathTraveled.addElement("You are now at " + "(" + updateRow + ", " + updateCol + ")");
+        pathTraveled.addElement("Your Total Difficulty so far is " +  difficultyTotal);
+        
+        if (updateRow == rows - 1) {
+            pathTraveled.addElement("-------------------------------");
+            pathTraveled.addElement("You have reached the end");
+            pathTraveled.addElement("of the Terrain!");
+            pathTraveled.addElement("Your Total Difficulty was " + difficultyTotal);
+        }
+    }
+    
     public static void main(String[] args) {
         TerrainGUI application = new TerrainGUI();
     }
