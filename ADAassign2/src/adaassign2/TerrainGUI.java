@@ -30,7 +30,7 @@ public class TerrainGUI {
     private JPanel controlPanel = new JPanel();
     public int rows;
     public int columns;
-    private String[][] difficulty;
+    public String[][] difficulty;
     //private JOptionPane chooseTerrianOption = new JOptionPane();
     public String userTerrain = "";
     private DrawTerrain drawTerrainPanel = new DrawTerrain();
@@ -53,7 +53,7 @@ public class TerrainGUI {
         this.rows = db.rows;
         this.columns = db.columns;
         this.difficulty = db.difficulty;
-        System.out.println("That table has: " + rows + " and " + columns + " columns");
+        System.out.println("That table has: " + rows + "rows and " + columns + " columns");
         ChooseModeOption();
         System.out.println("The User picked: " + mode + " mode");
         ChooseStartingPoint();
@@ -61,7 +61,6 @@ public class TerrainGUI {
         Frame();
         MainPanel();
         ControlPanel();
-
 
         frame.setVisible(true);
     }
